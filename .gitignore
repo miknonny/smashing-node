@@ -1,0 +1,6 @@
+#ignore files with the following markers
+
+*.log
+node_modules
+/node_modules
+node_modules/

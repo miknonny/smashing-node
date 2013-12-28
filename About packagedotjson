@@ -1,0 +1,13 @@
+To define your own module.
+you need to create a package.json file.
+
+
+Importance.
+Allows users to easily share the dependdecy of your application with others.
+with out sending all the node modules directory.
+Because npm install takes care of everything distributing this directory will not make sense.
+
+You can publish your module by running the npm publish.
+
+
+npm search <module name> to search for packages.

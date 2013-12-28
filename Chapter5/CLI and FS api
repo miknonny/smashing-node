@@ -1,0 +1,203 @@
+CLI and FS api
+---------------
+We will be looking at stdin stdout and those related to the file system api.
+To do this we will create a an application.
+a simple command line file explorer.
+
+
+::COMMANDLINE FILE-EXPLORER::
+Goal.
+----
+Allow users to read and create files.
+
+Requiments of the app.
+-> It should run in the command line. 
+-> upon starting it should display the list of all files in the directory.
+-> After selecting a file. the app should output its content.
+-> if you select a directory the app should display its children
+
+Steps
+-----
+-> Create our module.
+-> Deciding on sync vs async.
+-> Understanding streams.
+-> Performing input vs output.
+-> Refactoring
+-> Interacting with filesystem
+-> Wrapping up.
+
+Lets start by creating a package.json for our module.
+
+#package.json
+{
+	"name": "file-explorer",
+	"version"; '0.0.1'
+	"description": "A commandline file explorer"
+}
+
+//note that npm adheres to a version spec called semver.
+to verify that our package.json is valid run npm install
+
+Now we need to be able to read dirctory with node.
+
+require('fs').readdirSync('.');
+this is sycnronous and returns all the files in the current directory.
+
+to be able to handle multiple concurrency we do this async using the readdir
+in one single process
+
+require('fs').readdir('.', function (err, files) {
+	console.log(files);
+});
+or you can define the an async function and pass it as an argument to 
+
+Understanding Streams.
+
+Console.log does somethimg specific it writes to the stdout stream the string that you supply.
+
+process.stdout.write (from program to console)  ::writeable strams
+process.stdout.err(from program to console) :: writable stream
+
+process.stdin.read(from keyboard to program); :: readable stream
+
+Note that process.stdin or process.stdout is all about the ability of program.js to be able to read from input or keyboard or being able to write to a display.
+
+The default state of the stdin stream is paused.
+Most times whren your program is executed it does something and then exits.
+
+When you resume the stream node watches the underlying file descriptor (that is the unix no 0). there for keeping the event loop running not exiting the program.
+
+
+Stream objects can have  a default encoding instead of having a raw buffer. you can get an encoded string.
+utf-8 ascii
+
+
+there are different types of streams such tcp, sockets or http.
+ 
+
+
+
+Exploring the commandline interface.
+process.argv  type [array] 
+contains all arguments.
+you can perform array methods on it.
+
+
+process.cwd
+To obtain the current working directory.
+process.chdir.
+to change the directory.
+
+
+
+Envirnomnent Variables.
+Allows you to easily acess enviromental variables as part of your shell environment.
+
+process.exit();
+exiting your program. 
+
+Signal
+One of the way that process communicate with operating system is with signals
+
+
+process.on('SIGKILL', function () {
+	//signal received.
+});
+
+
+ANSI escape codes.
+console.log('\33[90m')
+
+* \033 this begins the escape sequence,
+[ indicates the color settings.
+m wraps the setting up.
+
+To checkout more color codes visit http://en.wikipedia.org/wiki/Ansi_escape_code
+
+Exploring Fs module. 
+Consider the example of a large comma-separated file with millions of rows. Reading the entire file to parse it would mean a large allocation of memory all at once. A much better approach would be to read chunks at a time, look for line endings (“\n”) and parse progressively.
+
+Node Streams are a perfect fit for this, as you’ll read about next.
+//this reads the file all at once
+fs.readFile(‘my-file.txt’, function (err, contents){
+
+  // do something with file
+
+});
+
+var stream = fs.createReadStream(‘my-file.txt’, function (err, contents){
+	stream.on('data', function (chunk) {
+	// do something with files
+	});
+	stream.on('end', function (chunk) {
+		//reached the end of file.
+	});
+});  
+
+
+For writable stream.
+This is also the case for logging, especially with a writable stream. If you use a web app to log visitors to your website, it might not be so efficient to tell the operating system to open and close the file (and therefore seek it in your disk each time) because you’ll be writing to the file a lot.
+
+Good use case for fs.writeStream();
+
+Watch 
+Node also allows you to watch files for changes.
+fs.watchfile.
+
+you can also watch an entire directory with fs.watch
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

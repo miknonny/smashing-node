@@ -1,0 +1,23 @@
+Step 1.
+install the node-inspector
+npm install -g node-inpector //this installs the inspector global.
+
+Start the node debugger from the command line on the script that you want to test.
+
+$ node --debug-brk /your/short/script.js
+debugger listening on port 5858
+lets check that our process is on and runnning.
+
+$ pgrep -l node.
+
+2345 node.
+
+
+
+now we need to attach node-inspector.
+run the following command .
+$ node-inspector &
+
+$ node-inspector --web-port <port> //To listen on a different port.
+look at the github page to find out more.
+
