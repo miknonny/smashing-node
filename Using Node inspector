@@ -12,7 +12,7 @@ $ pgrep -l node.
 
 2345 node.
 
-
+use the --debug with no break if you are debugging a server.
 
 now we need to attach node-inspector.
 run the following command .
