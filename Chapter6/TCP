@@ -1,1 +1,8 @@
 TCP
+
+
+
+After implementing the tcp server in index.js. you have to learn how to implement a tcp client.
+
+This clients api will appear to bear a lot of resamblance to other webservices like twitter.
+

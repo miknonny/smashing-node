@@ -1,0 +1,48 @@
+HTTP
+
+
+Note that nodes transfer encoding is chunked even though it is not specified.
+This is due to nodes asynchronous nature.
+
+for http servers. note that the first thing you do is write the head.
+
+
+
+Creating a simple webserver leveraging all we have learnt.
+
+
+The reigning protocol of the web, HTTP/1.1 (as you may remember from the telnet example in Chapter 6), establishes different methods for a request:
+req.method
+• GET (the default)
+
+• POST
+
+• PUT
+
+• DELETE
+
+• PATCH (the newest)
+
+req.url - refers to the url
+req.method
+req.headers: An object literal that shows you the typical headers for your request
+http1.1 reigning protocol of the web.
+
+
+querystring.
+console.log(require('querystring').parse('name=geronimo'));
+this allows you to parse a url and return an object literal.
+
+::more on querystring::
+querystring.stringify({ foo: 'bar', baz: ['qux', 'quux'], corge: '' })
+// returns
+'foo=bar&baz=qux&baz=quux&corge='
+
+querystring.parse('foo=bar&baz=qux&baz=quux&corge')
+// returns
+{ foo: 'bar', baz: ['qux', 'quux'], corge: '' }
+
+
+Creating a new http client.
+calling http.request creates a new http client.
+
