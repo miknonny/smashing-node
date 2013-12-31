@@ -1,0 +1,170 @@
+Connect.
+
+http sits on top of Tcp
+here connect is a toolkit that sits on top of htto to provide new was of organising code.
+
+Uses of connect.
+
+- Serving static files.
+- Handling errors and bad or missing files.
+- handling different types of request.
+
+Connect is a layer on top of the http api module.
+
+
+If you want to handle logging in connect.
+app.use(connect.logger('dev'));
+
+
+Writing reusable middleware.
+
+
+Static middleware.
+static middleware is the most common type of middleware that you will use in express.
+Mounting.
+it allow to map arbitrary url to a file system on your server.
+
+server.use('/my-images', connect.static('/path/to/images'));
+
+maxAge.
+this static middleware allows us to determine how  long a certain resource is cached in the clients user agent.
+this is importtant if a certain resource is not going to change.
+
+server.use('/js', connect.static(/path/to/bundles), {maxAge: 10000000000})
+
+
+hidden.
+this enables connect to server static files that begin with dot. and are considered hidden files in unix.
+
+server.use(connect.static('/path/to/resource'),{hidden: true})
+
+Query.
+consider the following url.
+url: /blog-post?page=5;
+
+server.use(function (req) {
+	//req.url == "/blog-post?page=5";
+})
+
+
+
+server.use(connect.query);
+server.use(function (req,res) {
+	//req.query.page =="5";
+});
+
+passing thr query string is a common task that connect greatly simplifies.
+
+
+Logger.
+This is used for website diagnostics.
+there  are different logging formats.
+* default.
+* dev
+* short
+* tiny
+
+server.use(connect.logger('dev'));
+HTTP server with a logger middleware.
+
+var connect = require('connect');
+connect.createServer(
+	connect.logger('dev'),
+	function (req, res) {
+		res.writeHead(200);
+		res.end('Hello World');
+	}
+).listen(3000);
+
+
+
+The connect middleware also allows you to control the formating of your data.
+The logger middleware allows custom string to represent the way you want to output data.
+
+server.use(connect.logger(':method :remote-addr'))
+
+note that you can also log headers by using dynamic token req,res to log the content length and content-type of the response as along with howlong it took to produce
+
+
+server.use(connect.logger('type is' :res[content-type], 'length is' +':res[content-length', and it took :response-time ms. ))
+
+Complete list of tokens tha you can use
+* :req[header]
+* :res[header]
+* :http-version
+* :respponse-time
+* :remote-addr
+* :date
+* :method
+* :url
+* :referrer
+* :user-agent
+* :status
+
+connect.logger.token('type', function (req, res) {
+	return req.headers['content-type'];
+});
+
+Body parser.
+server.use(connect.bodyparser());
+
+Then you can get the post data in req.body.
+
+
+server.use(function (req,res) {
+	req.body.myinput;
+});
+
+
+
+
+Cookies.
+In a similar fashion to query. connect can process connecting and exporting of cookies.
+
+When a browser sends cookies it does so throught its cookies headers like this.
+
+GET /secret HTTP/1.1
+
+Host: www.mywebsite.org
+
+Cookie: secret1=value; secret2=value2
+
+Accept: */*
+
+to access the values secret one and secret two with out having to parse it manually.
+
+server.use(connect.cookieParser());
+server.use(function (req,res,next) {
+	//req.cookies.secret1 = value;
+	//req.cookies.secret2 = value2;
+});
+
+
+Sessions.
+This are user sessions tha spawns over multiple request.
+Connect makes it very easy to make a simple login system.
+
+{
+	"tobi": {
+		"password": "ferret",
+		"name": Tobi mikes
+	}
+}
+
+//first thing we do is we require connect and user.json file.
+
+
+var connect = require('connect'),
+	users = require('/users')
+
+Did you notice that you can also require json file.
+
+
+
+
+
+
+
+
+
+
