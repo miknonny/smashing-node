@@ -1,0 +1,77 @@
+Websockets.
+websockets consists of two parts.
+websockets api implemented by the browsers.
+websockets protocol implemented by servers.
+
+websockets are implemented as part of the html5 directive.
+the former is standardized by w3c and the later is standardized by IETF.
+
+var ws = new WebSocket('ws://host.path');
+ws.onopen = function () {
+	alert(ev.data);
+}
+
+
+ws.onclose = function () {};
+
+ws.ondata = function (ev) {
+	alert(ev.data);
+}
+
+
+The simplicity of this data is not coincidental. reminiscent of the tcp client that we wrote.
+
+here http headers are send only once.
+as soon as the connection is establisned only data is sent through.
+
+
+
+
+Request
+
+GET /ws HTTP/1.1
+
+Host: example.com
+
+Upgrade: websocket
+
+Connection: Upgrade
+
+Sec-WebSocket-Version: 6
+
+Sec-WebSocket-Origin: http://pmx
+
+Sec-WebSocket-Extensions: deflate-stream
+
+Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==
+
+Response
+
+HTTP/1.1 101 Switching Protocols
+
+Upgrade: websocket
+
+Connection: Upgrade
+
+Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=\\
+
+An echo example.
+Now let us setup an echo server and client that are exchanging both ping and pong strings.
+
+Its important to note that websockets handles anly the websocket request.
+all other request are still handles buy your http server.
+
+Echo implementation of websckets.
+
+
+Limitations of websockets.
+Older browsers do not support it. as it is only compliant with html5 browsers.
+This are the problems in which socket.io tries to fix in the next chapter
+
+
+
+
+
+
+
+

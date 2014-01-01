@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>webscket echo test</title>
+	<script>
+	var lastMessage;
+	window.onload = function () {
+		//create socket
+		var ws = new WebSocket('ws://localhost:3000');
+		ws.onopen = function () {
+			// send the first ping
+			ping();
+		}
+		function ping () {
+			//record the time stamp.
+			lastMessage = + new Date;
+			// send the message
+			ws.send('ping');
+		}
+	}
+	</script>
+</head>
+<body>
+
+</body>
+</html>
