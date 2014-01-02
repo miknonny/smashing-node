@@ -1,0 +1,28 @@
+mongodb.
+This is a document oriented schemaless database.
+
+Here data is stored in collections.
+Problems of schema dbase.
+It is very expensive to make changes to the table design, both operationaly and in terms of performance.
+
+In mysql you will need to run the following command to add column.
+
+$ mysql
+
+> ALTER TABLE profiles ADD COLUMN.
+
+This is not the case with mongodb. here you can think of data as documents that are flexible in their design.
+
+
+Accessing mongodb from nodejs.
+The most common method of accessing nodejs is with the use of a driver.
+driver. - this is an api that understands the protocol of the network access layer of the database.
+
+Validation
+
+Validation.
+Mongodb ensures that only the right kind of data is sent to the database.
+by enforcing fields for email and what have you.
+
+Atomicity.
+This make sure that only one change can be made to the database at a time.
